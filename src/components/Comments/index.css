@@ -1,0 +1,41 @@
+.name-input {
+  margin-bottom: 10px;
+}
+.mainContainer {
+  padding: 20px;
+}
+.input-image {
+  display: flex;
+  flex-direction: row;
+}
+.list-items {
+  list-style-type: none;
+  width: 100vw;
+}
+.addButton {
+  border-style: none;
+  background-color: #0284c7;
+  padding: 10px;
+  border-radius: 6px;
+  color: #ffffff;
+}
+
+.numberOFComments {
+  color: #ffffff;
+  font-weight: 500;
+  font-family: 'Roboto';
+  background-color: #0284c7;
+  padding: 5px;
+  border-radius: 3px;
+  width: 2%;
+  margin-right: 2px;
+}
+.count-comment {
+  display: flex;
+  flex-direction: row;
+}
+.comment-head {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 20px;
+}
