@@ -1,3 +1,23 @@
+.comment-item {
+  list-style-type: none;
+}
+
+.comment-container {
+  display: flex;
+}
+
+.initial-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  margin-top: 18px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
 .amber {
   background-color: #f59e0b;
 }
@@ -25,68 +45,83 @@
 .light-blue {
   background-color: #0ea5e9;
 }
-.isLiked {
-  color: #0ea5e9;
-  font-family: 'Beer Serif';
-  font-weight: 700;
-}
 
-/* Write your CSS here */
-
-.name-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 100px;
+.initial {
   color: #ffffff;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
+  font-family: 'Roboto';
+  font-size: 16px;
+  margin: 0;
 }
 
-.commenterName-time {
+.username-time-container {
   display: flex;
-  flex-direction: row;
   align-items: center;
-}
-.commenter-name {
-  font-family: 'Roboto';
-  font-weight: 600;
-  margin-right: 10px;
-}
-.comment-description {
-  font-family: 'Roboto';
-  padding: 0px;
-  margin-left: 30px;
-  font-family: 'Roboto';
+  margin-top: 20px;
+  margin-bottom: 12px;
 }
 
-.like-delete-container {
+.username {
+  color: #334155;
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.time {
+  color: #94a3b8;
+  font-family: 'Roboto';
+  font-size: 12px;
+  margin-left: 18px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.comment {
+  color: #64748b;
+  font-family: 'Roboto';
+  font-size: 14px;
+}
+
+.buttons-container {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.like-likeText-container {
+
+.like-container {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
 }
 
-.each-comment {
-  margin-right: 20px;
-  width: 90%;
-}
-.deleteButton {
-  border-style: none;
+.button {
   background-color: transparent;
+  color: #7e858e;
+  font-family: 'Roboto';
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
-.Like-button {
-  border-style: none;
-  background-color: transparent;
+
+.like-image {
+  height: 20px;
+  width: 20px;
+  margin-right: 8px;
 }
-.liked-text {
-  margin-bottom: 23px;
+
+.active {
+  color: #0ea5e9;
+}
+
+.delete {
+  height: 20px;
+  width: 20px;
+}
+
+.comment-line {
+  width: 100%;
+  border: 1px solid #dee0e3;
 }

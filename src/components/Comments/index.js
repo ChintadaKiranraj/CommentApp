@@ -1,10 +1,9 @@
 import {Component} from 'react'
-
 import {v4} from 'uuid'
 
-import './index.css'
-
 import CommentItem from '../CommentItem'
+
+import './index.css'
 
 const initialContainerBackgroundClassNames = [
   'amber',
@@ -16,136 +15,129 @@ const initialContainerBackgroundClassNames = [
   'light-blue',
 ]
 
-class Comment extends Component {
+class Comments extends Component {
   state = {
-    inputName: '',
-    inputComment: '',
+    nameInput: '',
+    commentInput: '',
     commentsList: [],
   }
 
-  getLikeStatus = likedId => {
-    this.setState(prevSta => ({
-      commentsList: prevSta.commentsList.map(eachListObj => {
-        if (eachListObj.id === likedId) {
-          return {...eachListObj, isLiked: !eachListObj.isLiked}
+  deleteComment = commentId => {
+    const {commentsList} = this.state
+
+    this.setState({
+      commentsList: commentsList.filter(comment => comment.id !== commentId),
+    })
+  }
+
+  toggleIsLiked = id => {
+    this.setState(prevState => ({
+      commentsList: prevState.commentsList.map(eachComment => {
+        if (id === eachComment.id) {
+          return {...eachComment, isLiked: !eachComment.isLiked}
         }
-        return eachListObj
+        return eachComment
       }),
     }))
   }
 
-  removeDeletedComment = commentId => {
+  renderCommentsList = () => {
     const {commentsList} = this.state
-    const removedDeletedCommentList = commentsList.filter(
-      eachList => eachList.id !== commentId,
-    )
-    this.setState({
-      commentsList: removedDeletedCommentList,
-    })
+
+    return commentsList.map(eachComment => (
+      <CommentItem
+        key={eachComment.id}
+        commentDetails={eachComment}
+        toggleIsLiked={this.toggleIsLiked}
+        deleteComment={this.deleteComment}
+      />
+    ))
   }
 
-  OnNameChange = event => {
-    this.setState({inputName: event.target.value})
-  }
-
-  OnCommentChange = event => {
-    this.setState({inputComment: event.target.value})
-  }
-
-  onAddSubmit = event => {
+  onAddComment = event => {
     event.preventDefault()
-    const {inputName, inputComment} = this.state
-
-    const colorIndex =
+    const {nameInput, commentInput} = this.state
+    const initialBackgroundColorClassName = `initial-container ${
       initialContainerBackgroundClassNames[
         Math.ceil(
           Math.random() * initialContainerBackgroundClassNames.length - 1,
         )
       ]
-    const NewCommit = {
+    }`
+    const newComment = {
       id: v4(),
-      name: inputName,
-      comment: inputComment,
+      name: nameInput,
+      comment: commentInput,
       date: new Date(),
       isLiked: false,
-      initialNameBg: colorIndex,
+      initialClassName: initialBackgroundColorClassName,
     }
-    this.setState(prevStave => ({
-      commentsList: [...prevStave.commentsList, NewCommit],
-      inputName: '',
-      inputComment: '',
+
+    this.setState(prevState => ({
+      commentsList: [...prevState.commentsList, newComment],
+      nameInput: '',
+      commentInput: '',
     }))
   }
 
-  getFromLocalStorage = () => {
-    const parsedList = JSON.parse(localStorage.getItem('commentsList'))
+  onChangeCommentInput = event => {
+    this.setState({
+      commentInput: event.target.value,
+    })
+  }
 
-    if (parsedList === undefined) {
-      return []
-    }
-    return parsedList
+  onChangeNameInput = event => {
+    this.setState({
+      nameInput: event.target.value,
+    })
   }
 
   render() {
-    const {inputName, inputComment, commentsList} = this.state
-    const numberOFComments = commentsList.length
-    localStorage.setItem('commentsList', JSON.stringify(commentsList))
-    const storedList = this.getFromLocalStorage()
-    console.log(storedList, 'storedList')
-    console.log(commentsList, 'commentsList')
+    const {nameInput, commentInput, commentsList} = this.state
 
     return (
-      <div className="mainContainer">
-        <div className="input-image">
-          <div>
-            <h1>Comments</h1>
-            <p>Say Something about 4.0 technologies</p>
-            <form onSubmit={this.onAddSubmit}>
+      <div className="app-container">
+        <div className="comments-container">
+          <h1 className="app-heading">Comments</h1>
+          <div className="comments-inputs">
+            <form className="form" onSubmit={this.onAddComment}>
+              <p className="form-description">
+                Say something about 4.0 Technologies
+              </p>
               <input
-                className="name-input"
                 type="text"
-                value={inputName}
-                onChange={this.OnNameChange}
+                className="name-input"
                 placeholder="Your Name"
+                value={nameInput}
+                onChange={this.onChangeNameInput}
               />
-              <br />
               <textarea
-                rows="8"
-                cols="55"
-                value={inputComment}
-                onChange={this.OnCommentChange}
                 placeholder="Your Comment"
+                className="comment-input"
+                value={commentInput}
+                onChange={this.onChangeCommentInput}
+                rows="6"
               />
-              <br />
-              <button type="submit" className="addButton">
+              <button type="submit" className="add-button">
                 Add Comment
               </button>
             </form>
-          </div>
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/comments-app/comments-img.png"
-            alt="comments"
-          />
-        </div>
-        <hr />
-        <div className="count-comment">
-          <p className="numberOFComments">{numberOFComments}</p>
-          <p className="comment-head">Comments</p>
-        </div>
-
-        <ul className="list-items">
-          {commentsList.map(eachComment => (
-            <CommentItem
-              eachComment={eachComment}
-              removeDeletedComment={this.removeDeletedComment}
-              getLikeStatus={this.getLikeStatus}
-              key={eachComment.id}
+            <img
+              className="image"
+              src="https://assets.ccbp.in/frontend/react-js/comments-app/comments-img.png"
+              alt="comments"
             />
-          ))}
-        </ul>
+          </div>
+          <hr className="line" />
+          <p className="heading">
+            <span className="comments-count">{commentsList.length}</span>
+            Comments
+          </p>
+          <ul className="comments-list">{this.renderCommentsList()}</ul>
+        </div>
       </div>
     )
   }
 }
 
-export default Comment
+export default Comments
